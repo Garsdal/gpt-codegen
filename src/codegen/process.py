@@ -1,6 +1,6 @@
-from src.codegen.openai import chatgpt_api_call, get_chatgpt_tokens, get_chatgpt_content, parse_chatgpt_python_code, generate_error_fix_message, get_latest_python_code_from_messages
-from src.codegen.prompt import append_chatml_messages
-from src.codegen.utils import execute_python_code, check_recursion_limit, check_code_execution_conditions
+from codegen.openai import chatgpt_api_call, get_chatgpt_tokens, get_chatgpt_content, parse_chatgpt_python_code, generate_error_fix_message, get_latest_python_code_from_messages
+from codegen.prompt import append_chatml_messages
+from codegen.utils import execute_python_code, check_recursion_limit, check_code_execution_conditions
 
 
 def process(code_session_messages, output_filepath, iterations=0, total_tokens=0, generate_error_fix=False):

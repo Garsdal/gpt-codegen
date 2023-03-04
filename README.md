@@ -92,7 +92,11 @@ Set up Python version 3.7 or higher
    ```sh
    pip install -r requirements.txt
    ```
-4. Enter your OpenAI API key in `config/config_api.json`
+4. Install the package
+   ```sh
+   pip install -e .
+   ```
+5. Enter your OpenAI API key in `config/config_api.json`
    ```json
    {
     "API_KEY": "YOUR KEY HERE",
