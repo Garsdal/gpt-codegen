@@ -3,7 +3,7 @@ from src.codegen.prompt import append_chatml_messages
 from src.codegen.utils import execute_python_code, check_recursion_limit, check_code_execution_conditions
 
 
-def process(code_session_messages, output_filepath, iterations=0, total_tokens=0):
+def process(code_session_messages, output_filepath, iterations=0, total_tokens=0, generate_error_fix=False):
     # We run the api call and get tokens
     result = chatgpt_api_call(code_session_messages)
     tokens = get_chatgpt_tokens(result)
@@ -26,15 +26,22 @@ def process(code_session_messages, output_filepath, iterations=0, total_tokens=0
 
     # We check if the code executed successfully
     if not python_code_executed:
-        error_fix_message, iterations, total_tokens = generate_error_fix_message(
-            code_session_messages, error, iterations, total_tokens)
-        code_session_messages = append_chatml_messages(code_session_messages, error_fix_message, role="user")
+        print("The code did not execute successfully.", error)
 
-        # We check if we have reached the maximum number of iterations or token > 5000
-        check_recursion_limit(iterations, total_tokens)
+        # We can try to generate a prompt to fix the error using ChatGPT (this is not default and needs more work)
+        if generate_error_fix:
+            error_fix_message, iterations, total_tokens = generate_error_fix_message(
+                code_session_messages, error, iterations, total_tokens)
+            code_session_messages = append_chatml_messages(code_session_messages, error_fix_message, role="user")
 
-        # Recursively call the function with the new GPT prompt
-        process(code_session_messages, output_filepath, iterations=iterations+1, total_tokens=total_tokens+tokens)
+            # We check if we have reached the maximum number of iterations or token > 5000
+            check_recursion_limit(iterations, total_tokens)
+
+            # Recursively call the function with the new GPT prompt
+            process(code_session_messages, output_filepath, iterations=iterations+1, total_tokens=total_tokens+tokens)
+        else:
+            process_execution = False
+            return process_execution, iterations, total_tokens
     else:
         # If the code executed successfully, we check the code execution
         code_execution_bool = check_code_execution_conditions(output_filepath)

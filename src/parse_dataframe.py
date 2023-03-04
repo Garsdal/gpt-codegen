@@ -23,5 +23,8 @@ if __name__ == "__main__":
     iterations = 0
     total_tokens = 0
     while not process_execution:
-        process_execution, iterations, total_tokens = process(code_session_messages, output_filepath, iterations, total_tokens)
+        code_session_messages = create_chatml_messages(system_prompt, user_prompt)
+
+        process_execution, iterations, total_tokens = process(
+            code_session_messages, output_filepath, iterations, total_tokens, generate_error_fix=False)
         check_recursion_limit(iterations, total_tokens)

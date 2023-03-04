@@ -11,12 +11,12 @@ def get_user_prompt(input_filepath: str, output_filepath: str) -> str:
     user_prompt = f"""
     Later in this prompt I will provide you with the head() of a dataframe as csv inside [].
 
-    You must write code to convert a dataframe to standard format. Standard format must fulfill the conditions:
+    You must write code to convert a dataframe to a standard format that must fulfill the conditions:
     1. The index must datetimeindex with format “%Y-%mm-%dd %HH:%MM”
     2. The index name must be "TimeUTC"
-    3. There must only be one column and the index
+    3. There must only be one column
     3. The only column must contain Power signal as a float value with unit kW
-    4. The column name must be “Power“
+    4. The column name must be “Power_kW“
 
     The Python code should fullfill the following conditions:
     1. The code must not contain any comments. Never.
@@ -38,9 +38,6 @@ def get_user_prompt(input_filepath: str, output_filepath: str) -> str:
 
     # We add it to the end of the user prompt
     user_prompt += "\n" + f"[{df_head_str}]"
-
-    # We also add the info of the dataframe
-    user_prompt += "\n" + f"[{df_info_str}]"
 
     return user_prompt
 

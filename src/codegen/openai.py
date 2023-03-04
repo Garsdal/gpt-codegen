@@ -77,4 +77,12 @@ def generate_error_fix_message(messages: list, error: str, iterations: int, tota
     iterations += 1
     error_fix_message = get_chatgpt_content(result)
 
+    # We update the message a bit
+    error_fix_message = f"""Please update the previous python code based on the following update to fix the error: {error_fix_message}"""
+
+    # We print the generated code
+    print("*"*20, "Iteration: ", iterations, "*"*20)
+    print("Total tokens: ", total_tokens)
+    print(error_fix_message)
+
     return error_fix_message, iterations, total_tokens

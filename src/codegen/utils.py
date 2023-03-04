@@ -27,7 +27,7 @@ def check_code_execution_conditions(output_filepath: str):
     if len(df.columns) != 1:
         return False
 
-    if df.columns[0] != "Power":
+    if df.columns[0] != "Power_kW":
         return False
 
     if df.index.name != "TimeUTC":
