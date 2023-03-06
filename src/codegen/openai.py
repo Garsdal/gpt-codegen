@@ -1,5 +1,5 @@
 import openai
-from src.codegen.prompt import create_chatml_messages, append_chatml_messages, get_system_prompt
+from codegen.prompt import create_chatml_messages, append_chatml_messages, get_system_prompt
 
 
 def chatgpt_api_call(messages: list) -> dict:
